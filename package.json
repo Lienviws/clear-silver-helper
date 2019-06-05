@@ -1,19 +1,19 @@
 {
-	"name": "clear-silver-helper",
-	"displayName": "clear-silver-helper",
-	"description": "ClearSilver templates extension",
-	"version": "0.0.1",
-	"scripts": {
+    "name": "clear-silver-helper",
+    "displayName": "clear-silver-helper",
+    "description": "ClearSilver templates extension",
+    "version": "0.0.1",
+    "scripts": {
         "start": "gulp",
         "build:yaml": "js-yaml syntaxes/clear-silver.yaml > syntaxes/clearSilver.tmLanguage.json"
     },
-	"engines": {
-		"vscode": "^1.29.0"
-	},
-	"categories": [
-		"Other"
-	],
-	"contributes": {
+    "engines": {
+        "vscode": "^1.29.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "contributes": {
         "languages": [
             {
                 "id": "clear-silver",
@@ -38,15 +38,22 @@
                     "meta.embedded.block.javascript": "source.js"
                 }
             }
+        ],
+        "snippets": [
+            {
+                "language": "clear-silver",
+                "path": "./snippets/clear-silver.json"
+            }
         ]
     },
-	"devDependencies": {
-		"eslint": "^4.11.0",
-		"gulp": "^4.0.2",
-		"gulp-debug": "^4.0.0",
-		"gulp-rename": "^1.4.0",
-		"gulp-yaml": "^2.0.4",
-		"typescript": "^3.1.4",
-		"vscode": "^1.1.25"
-	}
+    "devDependencies": {
+        "eslint": "^4.11.0",
+        "gulp": "^4.0.2",
+        "gulp-debug": "^4.0.0",
+        "gulp-rename": "^1.4.0",
+        "gulp-yaml": "^2.0.4",
+        "through2": "^3.0.1",
+        "typescript": "^3.1.4",
+        "vscode": "^1.1.25"
+    }
 }

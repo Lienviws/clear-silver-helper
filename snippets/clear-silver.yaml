@@ -1,0 +1,101 @@
+clearsilver tag:
+  prefix:
+  - "<?cs"
+  body:
+  - "<?cs $1 ?>"
+  description: 'clearsilver: <?cs语法标记'
+clearsilver var:
+  prefix:
+  - cs-var
+  - "<?cs-var"
+  body:
+  - "<?cs var:$1 ?>"
+  description: |-
+    clearsilver: var
+    输出变量值
+clearsilver set:
+  prefix:
+  - cs-set
+  - "<?cs-set"
+  body:
+  - "<?cs set:$1=$2 ?>"
+  description: |-
+    clearsilver: set
+    赋值语句
+clearsilver include:
+  prefix:
+  - cs-include
+  - "<?cs-include"
+  body:
+  - <?cs include:"$1" ?>
+  description:
+  - 'clearsilver: include'
+  - 引入其他cs模板
+  - 'eg:'
+  - <?cs include:"header.cs" ?>
+clearsilver name:
+  prefix:
+  - cs-name
+  - "<?cs-name"
+  body:
+  - "<?cs name:$1 ?>"
+  description: 'clearsilver: name'
+clearsilver if:
+  prefix:
+  - cs-if
+  - "<?cs-if"
+  body:
+  - "<?cs if:$1 ?>$2<?cs /if ?>"
+  description: 'clearsilver: if'
+clearsilver elif:
+  prefix:
+  - cs-elif
+  - "<?cs-elif"
+  body:
+  - "<?cs elif:$1 ?>"
+  - "$0"
+  description: 'clearsilver: if'
+clearsilver if-else:
+  prefix:
+  - cs-if-else
+  - "<?cs-if-else"
+  body:
+  - "<?cs if:$1 ?>$2<?cs else ?>$3<?cs /if ?>"
+  description: 'clearsilver: if-else'
+clearsilver each:
+  prefix:
+  - cs-each
+  - "<?cs-each"
+  body:
+  - "<?cs each:${2:item} = ${1:array} ?>"
+  - "\t$0"
+  - "<?cs /each ?>"
+  description: |-
+    clearsilver: each
+    迭代语句
+clearsilver loop:
+  prefix:
+  - cs-loop
+  - "<?cs-loop"
+  body:
+  - "<?cs loop:${4:num} = ${1:start}, ${2:end}, ${3:interval} ?>"
+  - "\t$0"
+  - "<?cs /each ?>"
+  description:
+  - 'clearsilver: each'
+  - 循环语法
+  - 'eg:'
+  - "<?cs loop:x = #1, #205, #2 ?><?cs var:x ?>, <?cs /loop ?>"
+  - 1, 3, 5... 205
+clearsilver def:
+  prefix:
+  - cs-def
+  - "<?cs-def"
+  body:
+  - "<?cs def:${1:functionName}(${2:arg0}) ?>"
+  - "\t$0"
+  - "\t<?cs var:${3:returnValue}?>"
+  - "<?cs /def ?>"
+  description:
+  - 'clearsilver: def'
+  - 定义函数
