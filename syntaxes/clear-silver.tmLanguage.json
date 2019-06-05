@@ -1,0 +1,654 @@
+{
+    "name": "clearSilver extension",
+    "scopeName": "source.csr",
+    "fileTypes": [
+        "csr"
+    ],
+    "patterns": [
+        {
+            "name": "comment.block.cs",
+            "begin": "<\\?cs\\s+#",
+            "end": "\\s*(\\?>)",
+            "captures": {
+                "0": {
+                    "name": "punctuation.definition.comment.cs"
+                }
+            }
+        },
+        {
+            "name": "meta.tag.any.html.cs-single",
+            "begin": "(<\\?)(cs)\\s+(?!if|each|with|loop|alt|def)",
+            "beginCaptures": {
+                "1": {
+                    "name": "punctuation.definition.tag.begin.cs"
+                },
+                "2": {
+                    "name": "entity.name.tag.template.cs"
+                }
+            },
+            "end": "\\s*(\\?>)",
+            "endCaptures": {
+                "1": {
+                    "name": "punctuation.definition.tag.end.cs"
+                }
+            },
+            "patterns": [
+                {
+                    "include": "#cs-commands-single"
+                }
+            ]
+        },
+        {
+            "name": "meta.tag.any.html.cs-multi",
+            "begin": "(<\\?)(cs)\\s+(?=if|each|with|loop|alt|def)",
+            "beginCaptures": {
+                "1": {
+                    "name": "punctuation.definition.tag.begin.cs.mult"
+                },
+                "2": {
+                    "name": "entity.name.tag.template.cs.mult"
+                }
+            },
+            "end": "(?:\\s|^)(\\?>)",
+            "endCaptures": {
+                "1": {
+                    "name": "punctuation.definition.tag.end.cs.mult"
+                }
+            },
+            "patterns": [
+                {
+                    "include": "#cs-commands-mult"
+                }
+            ]
+        }
+    ],
+    "repository": {
+        "cs-commands-single": {
+            "name": "keyword.commands.single",
+            "patterns": [
+                {
+                    "include": "#command-var"
+                },
+                {
+                    "include": "#command-set"
+                },
+                {
+                    "include": "#command-name"
+                },
+                {
+                    "include": "#command-include"
+                },
+                {
+                    "include": "#command-call"
+                }
+            ]
+        },
+        "cs-commands-mult": {
+            "name": "keyword.commands.mult",
+            "patterns": [
+                {
+                    "include": "#command-if"
+                },
+                {
+                    "include": "#command-alt"
+                },
+                {
+                    "include": "#command-with"
+                },
+                {
+                    "include": "#command-loop"
+                },
+                {
+                    "include": "#command-each"
+                },
+                {
+                    "include": "#command-def"
+                }
+            ]
+        },
+        "command-var": {
+            "name": "meta.namespace.var",
+            "match": "(var)(:)([a-zA-Z0-9._]+)",
+            "captures": {
+                "1": {
+                    "name": "storage.type.var"
+                },
+                "2": {
+                    "name": "punctuation.separator.key-value.csr"
+                },
+                "3": {
+                    "name": "variable.other.readwrite"
+                }
+            }
+        },
+        "command-set": {
+            "name": "meta.namespace.set",
+            "begin": "(set)(:)",
+            "beginCaptures": {
+                "1": {
+                    "name": "keyword.commands.set"
+                },
+                "2": {
+                    "name": "punctuation.separator.key-value.csr"
+                }
+            },
+            "end": "(?=(\\s|^)\\?>)",
+            "patterns": [
+                {
+                    "include": "#expression"
+                }
+            ]
+        },
+        "command-name": {
+            "name": "meta.namespace.name",
+            "match": "(name)(:)([a-zA-Z0-9._]+)",
+            "captures": {
+                "1": {
+                    "name": "storage.type.name"
+                },
+                "2": {
+                    "name": "punctuation.separator.key-value.csr"
+                },
+                "3": {
+                    "name": "variable.other.readwrite"
+                }
+            }
+        },
+        "command-include": {
+            "name": "meta.namespace.include",
+            "match": "(include)(:)('|\")([a-zA-Z0-9._]+)('|\")",
+            "captures": {
+                "1": {
+                    "name": "keyword.commands.include"
+                },
+                "2": {
+                    "name": "punctuation.separator.key-value.csr"
+                },
+                "3": {
+                    "name": "string.quoted.double.html"
+                },
+                "4": {
+                    "name": "string.value"
+                },
+                "5": {
+                    "name": "string.quoted.double.html"
+                }
+            }
+        },
+        "command-call": {
+            "name": "meta.namespace.call",
+            "begin": "(call)(:)",
+            "beginCaptures": {
+                "1": {
+                    "name": "keyword.commands.call"
+                },
+                "2": {
+                    "name": "punctuation.separator.key-value.csr"
+                }
+            },
+            "end": "(?=\\s*\\?>)",
+            "patterns": [
+                {
+                    "include": "#function-call"
+                }
+            ]
+        },
+        "command-if": {
+            "name": "meta.tag.if",
+            "begin": "(if)(:)",
+            "beginCaptures": {
+                "1": {
+                    "name": "keyword.control.if.start"
+                },
+                "2": {
+                    "name": "punctuation.separator.key-value.csr"
+                }
+            },
+            "end": "(?<=<\\?cs)\\s+(/if)",
+            "endCaptures": {
+                "1": {
+                    "name": "keyword.control.if.end"
+                }
+            },
+            "patterns": [
+                {
+                    "begin": "(?<=if:)",
+                    "end": "(?=\\s*\\?>)",
+                    "patterns": [
+                        {
+                            "include": "#expression"
+                        }
+                    ]
+                },
+                {
+                    "begin": "(\\?>)",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "punctuation.definition.tag.end.cs.inner"
+                        }
+                    },
+                    "end": "(<\\?)(cs)(?=\\s/if)",
+                    "endCaptures": {
+                        "1": {
+                            "name": "punctuation.definition.tag.begin.cs.inner"
+                        },
+                        "2": {
+                            "name": "entity.name.tag.template.cs.inner"
+                        }
+                    },
+                    "patterns": [
+                        {
+                            "name": "meta.tag.elseif",
+                            "begin": "(<\\?)(cs)\\s+(elif)(:)",
+                            "beginCaptures": {
+                                "1": {
+                                    "name": "punctuation.definition.tag.begin.cs.elif"
+                                },
+                                "2": {
+                                    "name": "entity.name.tag.template.cs.elif"
+                                },
+                                "3": {
+                                    "name": "keyword.control.elif"
+                                },
+                                "4": {
+                                    "name": "punctuation.separator.key-value.csr"
+                                },
+                                "5": {
+                                    "name": "string.value"
+                                }
+                            },
+                            "end": "(?:\\s|^)(\\?>)",
+                            "endCaptures": {
+                                "1": {
+                                    "name": "punctuation.definition.tag.end.cs.elif"
+                                }
+                            },
+                            "patterns": [
+                                {
+                                    "begin": "(?<=elif:)",
+                                    "end": "(?=\\s*\\?>)",
+                                    "patterns": [
+                                        {
+                                            "include": "#expression"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "name": "meta.tag.else",
+                            "begin": "(<\\?)(cs)\\s+(else)",
+                            "beginCaptures": {
+                                "1": {
+                                    "name": "punctuation.definition.tag.begin.cs.else"
+                                },
+                                "2": {
+                                    "name": "entity.name.tag.template.cs.else"
+                                },
+                                "3": {
+                                    "name": "keyword.control.else"
+                                }
+                            },
+                            "end": "(?:\\s|^)(\\?>)",
+                            "endCaptures": {
+                                "1": {
+                                    "name": "punctuation.definition.tag.end.cs.else"
+                                }
+                            }
+                        },
+                        {
+                            "include": "source.csr"
+                        }
+                    ]
+                }
+            ]
+        },
+        "command-alt": {
+            "name": "meta.tag.alt",
+            "begin": "(alt)(:)",
+            "beginCaptures": {
+                "1": {
+                    "name": "keyword.control.alt.start"
+                },
+                "2": {
+                    "name": "punctuation.separator.key-value.csr"
+                },
+                "3": {
+                    "name": "string.value"
+                },
+                "4": {
+                    "name": "punctuation.definition.tag.end.cs.inner"
+                }
+            },
+            "end": "(<\\?)(cs)\\s+(/alt)",
+            "endCaptures": {
+                "1": {
+                    "name": "punctuation.definition.tag.begin.cs.inner"
+                },
+                "2": {
+                    "name": "entity.name.tag.template.cs.inner"
+                },
+                "3": {
+                    "name": "keyword.control.alt.end"
+                }
+            },
+            "patterns": [
+                {
+                    "begin": "(?<=alt:)",
+                    "end": "(?=\\s*\\?>)",
+                    "patterns": [
+                        {
+                            "include": "#expression"
+                        }
+                    ]
+                },
+                {
+                    "match": "(\\?>)",
+                    "captures": {
+                        "1": {
+                            "name": "punctuation.definition.tag.end.cs.inner"
+                        }
+                    }
+                }
+            ]
+        },
+        "command-with": {
+            "name": "meta.tag.with",
+            "begin": "(with)(:)",
+            "beginCaptures": {
+                "1": {
+                    "name": "keyword.control.with.start"
+                },
+                "2": {
+                    "name": "punctuation.separator.key-value.csr"
+                }
+            },
+            "end": "(?<=<\\?cs)\\s+(/with)",
+            "endCaptures": {
+                "1": {
+                    "name": "keyword.control.with.end"
+                }
+            },
+            "patterns": [
+                {
+                    "begin": "(\\?>)",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "punctuation.definition.tag.end.cs.inner"
+                        }
+                    },
+                    "end": "(<\\?)(cs)(?=\\s/with)",
+                    "endCaptures": {
+                        "1": {
+                            "name": "punctuation.definition.tag.begin.cs.inner"
+                        },
+                        "2": {
+                            "name": "entity.name.tag.template.cs.inner"
+                        }
+                    },
+                    "patterns": [
+                        {
+                            "include": "source.csr"
+                        }
+                    ]
+                },
+                {
+                    "include": "#expression"
+                }
+            ]
+        },
+        "command-loop": {
+            "name": "meta.tag.loop",
+            "begin": "(loop)(:)",
+            "beginCaptures": {
+                "1": {
+                    "name": "keyword.control.loop.start"
+                },
+                "2": {
+                    "name": "punctuation.separator.key-value.csr"
+                }
+            },
+            "end": "(?<=<\\?cs)\\s+(/loop)",
+            "endCaptures": {
+                "1": {
+                    "name": "keyword.control.loop.end"
+                }
+            },
+            "patterns": [
+                {
+                    "begin": "(\\?>)",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "punctuation.definition.tag.end.cs.inner"
+                        }
+                    },
+                    "end": "(<\\?)(cs)(?=\\s/loop)",
+                    "endCaptures": {
+                        "1": {
+                            "name": "punctuation.definition.tag.begin.cs.inner"
+                        },
+                        "2": {
+                            "name": "entity.name.tag.template.cs.inner"
+                        }
+                    },
+                    "patterns": [
+                        {
+                            "include": "source.csr"
+                        }
+                    ]
+                },
+                {
+                    "include": "#expression"
+                }
+            ]
+        },
+        "command-each": {
+            "name": "meta.tag.each",
+            "begin": "(each)(:)",
+            "beginCaptures": {
+                "1": {
+                    "name": "keyword.control.each.start"
+                },
+                "2": {
+                    "name": "punctuation.separator.key-value.csr"
+                }
+            },
+            "end": "(?<=<\\?cs)\\s+(/each)",
+            "endCaptures": {
+                "1": {
+                    "name": "keyword.control.each.end"
+                }
+            },
+            "patterns": [
+                {
+                    "begin": "(\\?>)",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "punctuation.definition.tag.end.cs.inner"
+                        }
+                    },
+                    "end": "(<\\?)(cs)(?=\\s/each)",
+                    "endCaptures": {
+                        "1": {
+                            "name": "punctuation.definition.tag.begin.cs.inner"
+                        },
+                        "2": {
+                            "name": "entity.name.tag.template.cs.inner"
+                        }
+                    },
+                    "patterns": [
+                        {
+                            "include": "source.csr"
+                        }
+                    ]
+                },
+                {
+                    "include": "#expression"
+                }
+            ]
+        },
+        "command-def": {
+            "name": "meta.tag.def",
+            "begin": "(def)(:)",
+            "beginCaptures": {
+                "1": {
+                    "name": "keyword.control.def.start"
+                },
+                "2": {
+                    "name": "punctuation.separator.key-value.csr"
+                }
+            },
+            "end": "(?<=<\\?cs)\\s+(/def)",
+            "endCaptures": {
+                "1": {
+                    "name": "keyword.control.def.end"
+                }
+            },
+            "patterns": [
+                {
+                    "name": "meta.function.csr",
+                    "begin": "([a-zA-Z0-9_]+)\\s*(\\()\\s*",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "entity.name.function.csr"
+                        },
+                        "2": {
+                            "name": "punctuation.definition.parameters.start"
+                        }
+                    },
+                    "end": "\\s*(\\))\\s*",
+                    "endCaptures": {
+                        "1": {
+                            "name": "punctuation.definition.parameters.end"
+                        }
+                    },
+                    "patterns": [
+                        {
+                            "name": "meta.parameters.csr",
+                            "match": "(\\s*(?:[a-zA-Z0-9_]+)(,)?)",
+                            "captures": {
+                                "1": {
+                                    "name": "variable.parameter.csr"
+                                },
+                                "2": {
+                                    "name": "punctuation.separator.parameter.csr"
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "begin": "(\\?>)",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "punctuation.definition.tag.end.cs.inner"
+                        }
+                    },
+                    "end": "(<\\?)(cs)(?=\\s/def)",
+                    "endCaptures": {
+                        "1": {
+                            "name": "punctuation.definition.tag.begin.cs.inner"
+                        },
+                        "2": {
+                            "name": "entity.name.tag.template.cs.inner"
+                        }
+                    },
+                    "patterns": [
+                        {
+                            "include": "source.csr"
+                        }
+                    ]
+                }
+            ]
+        },
+        "expression": {
+            "patterns": [
+                {
+                    "include": "source.js#string"
+                },
+                {
+                    "include": "source.js#identifiers"
+                },
+                {
+                    "include": "#expression-operators"
+                },
+                {
+                    "include": "#literal"
+                },
+                {
+                    "include": "#function-call"
+                },
+                {
+                    "include": "source.js#punctuation-comma"
+                }
+            ]
+        },
+        "function-call": {
+            "patterns": [
+                {
+                    "begin": "(?<=call:)",
+                    "end": "(?=(\\)\\s*$)|(\\?>))",
+                    "patterns": [
+                        {
+                            "begin": "(?<=call:)",
+                            "end": "(?:\\()",
+                            "patterns": [
+                                {
+                                    "include": "source.js#identifiers"
+                                }
+                            ]
+                        },
+                        {
+                            "begin": "(?<=\\()",
+                            "end": "(?=(\\)\\s*$)|(\\?>))",
+                            "patterns": [
+                                {
+                                    "include": "#expression"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        "expression-operators": {
+            "patterns": [
+                {
+                    "name": "keyword.operator.logical.csr",
+                    "match": "\\!|&&|\\|\\|"
+                },
+                {
+                    "name": "keyword.operator.comparison.csr",
+                    "match": "==|\\!="
+                },
+                {
+                    "name": "keyword.operator.relational.csr",
+                    "match": ">|>=|<|<="
+                },
+                {
+                    "name": "keyword.operator.arithmetic.csr",
+                    "match": "\\+|-|\\*|/|%"
+                },
+                {
+                    "name": "keyword.operator.convert.csr",
+                    "match": "#|\\$"
+                },
+                {
+                    "name": "keyword.operator.existance.csr",
+                    "match": "\\?"
+                }
+            ]
+        },
+        "literal": {
+            "patterns": [
+                {
+                    "name": "constant.numeric.decimal.csr",
+                    "match": "([0-9])"
+                },
+                {
+                    "include": "source.js#array-literal"
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,52 @@
+{
+	"name": "clear-silver-helper",
+	"displayName": "clear-silver-helper",
+	"description": "ClearSilver templates extension",
+	"version": "0.0.1",
+	"scripts": {
+        "start": "gulp",
+        "build:yaml": "js-yaml syntaxes/clear-silver.yaml > syntaxes/clearSilver.tmLanguage.json"
+    },
+	"engines": {
+		"vscode": "^1.29.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"contributes": {
+        "languages": [
+            {
+                "id": "clear-silver",
+                "aliases": [
+                    "csr"
+                ],
+                "extensions": [
+                    ".csr",
+                    ".shtml"
+                ],
+                "configuration": "./languages/clear-silver-language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "clear-silver",
+                "scopeName": "source.csr",
+                "path": "./syntaxes/clear-silver.tmLanguage.json",
+                "embeddedLanguages": {
+                    "csr.pug.csr-pug": "csr-pug",
+                    "text.html.basic": "html",
+                    "meta.embedded.block.javascript": "source.js"
+                }
+            }
+        ]
+    },
+	"devDependencies": {
+		"eslint": "^4.11.0",
+		"gulp": "^4.0.2",
+		"gulp-debug": "^4.0.0",
+		"gulp-rename": "^1.4.0",
+		"gulp-yaml": "^2.0.4",
+		"typescript": "^3.1.4",
+		"vscode": "^1.1.25"
+	}
+}
