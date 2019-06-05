@@ -108,18 +108,21 @@
         },
         "command-var": {
             "name": "meta.namespace.var",
-            "match": "(var)(:)([a-zA-Z0-9._]+)",
-            "captures": {
+            "begin": "(var)(:)",
+            "beginCaptures": {
                 "1": {
                     "name": "storage.type.var"
                 },
                 "2": {
                     "name": "punctuation.separator.key-value.csr"
-                },
-                "3": {
-                    "name": "variable.other.readwrite"
                 }
-            }
+            },
+            "end": "(?=\\s*\\?>)",
+            "patterns": [
+                {
+                    "include": "#expression"
+                }
+            ]
         },
         "command-set": {
             "name": "meta.namespace.set",
@@ -132,7 +135,7 @@
                     "name": "punctuation.separator.key-value.csr"
                 }
             },
-            "end": "(?=(\\s|^)\\?>)",
+            "end": "(?=\\s*\\?>)",
             "patterns": [
                 {
                     "include": "#expression"
@@ -531,7 +534,7 @@
                                     "name": "variable.parameter.csr"
                                 },
                                 "2": {
-                                    "name": "punctuation.separator.parameter.csr"
+                                    "name": "punctuation.separator.comma.csr"
                                 }
                             }
                         }

@@ -55,11 +55,13 @@ repository:
   # var
   command-var:
     name: meta.namespace.var
-    match: (var)(:)([a-zA-Z0-9._]+)
-    captures:
+    begin: (var)(:)
+    beginCaptures:
       '1': { name: storage.type.var }
       '2': { name: punctuation.separator.key-value.csr }
-      '3': { name: variable.other.readwrite }
+    end: (?=\s*\?>)
+    patterns:
+      - include: '#expression'
   # set
   command-set:
     name: meta.namespace.set
@@ -67,7 +69,7 @@ repository:
     beginCaptures:
       '1': { name: keyword.commands.set }
       '2': { name: punctuation.separator.key-value.csr }
-    end: (?=(\s|^)\?>)
+    end: (?=\s*\?>)
     patterns:
       - include: '#expression'
   # name
@@ -259,7 +261,7 @@ repository:
             match: (\s*(?:[a-zA-Z0-9_]+)(,)?)
             captures:
               '1': { name: variable.parameter.csr }
-              '2': { name: punctuation.separator.parameter.csr }
+              '2': { name: punctuation.separator.comma.csr }
       - begin: (\?>)
         beginCaptures: 
           '1': { name: punctuation.definition.tag.end.cs.inner }
