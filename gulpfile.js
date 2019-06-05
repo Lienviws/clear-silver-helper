@@ -1,21 +1,33 @@
 const path = require('path')
 
 const gulp = require('gulp')
+const through2 = require('through2')
 const yaml = require('gulp-yaml')
 const rename = require("gulp-rename")
 const debug = require('gulp-debug')
  
-const emptyCb = () => {}
-const INCLUDE_DIR = {
-    yaml: './syntaxes/'
-}
-const OUTPUT_DIR = {
-    yaml: './syntaxes/'
+const noop = () => { }
+
+const DIR = {
+    syntaxes: './syntaxes/',
+    snippets: './snippets/'
 }
 
-function yaml2json (cb, filePath) {
-    if (!filePath) filePath = path.join(INCLUDE_DIR.yaml, '*.yaml')
+function yaml2json (filePath, destPath, {
+    extname = null
+} = {}) {
     return gulp.src(filePath)
+        .pipe(through2.obj(function (chunk, enc, cb) {
+            debugger
+            if (chunk.contents.toString().trim().length == 0) {
+                return cb('file should not empty')
+            }
+            this.push(chunk)
+            cb()
+        }))
+        .on('error', function(err) {
+            console.log(err)
+        })
         .pipe(debug({
             title: 'yaml2json:',
             showFiles: true,
@@ -27,25 +39,28 @@ function yaml2json (cb, filePath) {
                 console.log('----------')
             }
         }))
-        .pipe(rename({
-            extname: '.tmLanguage.json'
-        }))
-        .pipe(gulp.dest(OUTPUT_DIR.yaml))
+        .pipe(extname ? rename({ extname }) : through2.obj())
+        .pipe(gulp.dest(destPath))
 }
 
-function yaml2jsonAll () {
-    return () => {
-        return yaml2json
-    }
-}
-
-const watchYaml = gulp.series(yaml2json, function (cb) {
-    const watcher = gulp.watch(path.join(INCLUDE_DIR.yaml, '*.yaml'))
-    watcher.on('change', (path, stats) => {
+const watchYaml = function () {
+    const syntaxWatcher = gulp.watch(path.join(DIR.syntaxes, '*.yaml'))
+    const snippetWatcher = gulp.watch(path.join(DIR.snippets, '*.yaml'), { ignoreInitial: false })
+    syntaxWatcher.on('change', (path, stats) => {
         console.log(`File ${path} was changed, make it to json`)
-        yaml2json(emptyCb, path)
+        yaml2json(path, DIR.syntaxes, {
+            extname: '.tmLanguage.json'
+        })
     })
-    cb()
-})
+    snippetWatcher.on('change', (path, stats) => {
+        console.log(`File ${path} was changed, make it to json`)
+        yaml2json(path, DIR.snippets)
+    })
+    snippetWatcher.on('error', (path, stats) => {
+        console.log(`File ${path} was changed, make it to json`)
+    })
+}
 
-exports.default = gulp.series(watchYaml)
+exports.default = function () {
+    watchYaml()
+}
