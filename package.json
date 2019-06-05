@@ -2,17 +2,28 @@
     "name": "clear-silver-helper",
     "displayName": "clear-silver-helper",
     "description": "ClearSilver templates extension",
-    "version": "0.0.1",
+	"version": "0.0.1",
+	"publisher": "lienviws",
     "scripts": {
+		"build": "vsce package",
         "start": "gulp",
         "build:yaml": "js-yaml syntaxes/clear-silver.yaml > syntaxes/clearSilver.tmLanguage.json"
     },
+	"keywords": [
+		"ClearSilver",
+		"clear-silver",
+		"clear silver"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Lienviws/clear-silver-helper"
+	},
     "engines": {
         "vscode": "^1.29.0"
     },
     "categories": [
         "Other"
-    ],
+	],
     "contributes": {
         "languages": [
             {
@@ -21,8 +32,7 @@
                     "csr"
                 ],
                 "extensions": [
-                    ".csr",
-                    ".shtml"
+                    ".csr"
                 ],
                 "configuration": "./languages/clear-silver-language-configuration.json"
             }
