@@ -213,7 +213,7 @@
             "patterns": [
                 {
                     "begin": "(?<=if:)",
-                    "end": "(?=\\s*\\?>)",
+                    "end": "(?=\\?>)",
                     "patterns": [
                         {
                             "include": "#expression"
@@ -257,7 +257,7 @@
                                     "name": "string.value"
                                 }
                             },
-                            "end": "(?:\\s|^)(\\?>)",
+                            "end": "(?:\\s*|^)(\\?>)",
                             "endCaptures": {
                                 "1": {
                                     "name": "punctuation.definition.tag.end.cs.elif"
@@ -266,7 +266,7 @@
                             "patterns": [
                                 {
                                     "begin": "(?<=elif:)",
-                                    "end": "(?=\\s*\\?>)",
+                                    "end": "(?=\\?>)",
                                     "patterns": [
                                         {
                                             "include": "#expression"
@@ -335,7 +335,7 @@
             "patterns": [
                 {
                     "begin": "(?<=alt:)",
-                    "end": "(?=\\s*\\?>)",
+                    "end": "(?=\\?>)",
                     "patterns": [
                         {
                             "include": "#expression"
