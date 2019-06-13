@@ -6,64 +6,61 @@
     ],
     "patterns": [
         {
-            "name": "comment.block.cs",
-            "begin": "<\\?cs\\s+#",
-            "end": "(\\?>)",
-            "captures": {
-                "0": {
-                    "name": "punctuation.definition.comment.cs"
-                }
-            }
-        },
-        {
-            "name": "meta.tag.any.html.cs-single",
-            "begin": "(<\\?)(cs)\\s+(?!if|each|with|loop|alt|def)",
-            "beginCaptures": {
-                "1": {
-                    "name": "punctuation.definition.tag.begin.cs"
-                },
-                "2": {
-                    "name": "entity.name.tag.template.cs"
-                }
-            },
-            "end": "(\\?>)",
-            "endCaptures": {
-                "1": {
-                    "name": "punctuation.definition.tag.end.cs"
-                }
-            },
             "patterns": [
                 {
-                    "include": "#cs-commands-single"
+                    "include": "#comment"
                 }
             ]
         },
         {
-            "name": "meta.tag.any.html.cs-multi",
-            "begin": "(<\\?)(cs)\\s+(?=if|each|with|loop|alt|def)",
+            "name": "meta.tag.any.html.csr-single",
+            "begin": "(<\\?)(cs)\\s+(?!if|each|with|loop|alt|def)",
             "beginCaptures": {
                 "1": {
-                    "name": "punctuation.definition.tag.begin.cs.mult"
+                    "name": "punctuation.definition.tag.begin.csr"
                 },
                 "2": {
-                    "name": "entity.name.tag.template.cs.mult"
+                    "name": "entity.name.tag.template.csr"
                 }
             },
             "end": "(\\?>)",
             "endCaptures": {
                 "1": {
-                    "name": "punctuation.definition.tag.end.cs.mult"
+                    "name": "punctuation.definition.tag.end.csr"
                 }
             },
             "patterns": [
                 {
-                    "include": "#cs-commands-mult"
+                    "include": "#csr-commands-single"
+                }
+            ]
+        },
+        {
+            "name": "meta.tag.any.html.csr-multi",
+            "begin": "(<\\?)(cs)\\s+(?=if|each|with|loop|alt|def)",
+            "beginCaptures": {
+                "1": {
+                    "name": "punctuation.definition.tag.begin.csr.mult"
+                },
+                "2": {
+                    "name": "entity.name.tag.template.csr.mult"
+                }
+            },
+            "end": "(\\?>)",
+            "endCaptures": {
+                "1": {
+                    "name": "punctuation.definition.tag.end.csr.mult"
+                }
+            },
+            "patterns": [
+                {
+                    "include": "#csr-commands-mult"
                 }
             ]
         }
     ],
     "repository": {
-        "cs-commands-single": {
+        "csr-commands-single": {
             "name": "keyword.commands.single",
             "patterns": [
                 {
@@ -83,7 +80,7 @@
                 }
             ]
         },
-        "cs-commands-mult": {
+        "csr-commands-mult": {
             "name": "keyword.commands.mult",
             "patterns": [
                 {
@@ -227,16 +224,16 @@
                     "begin": "(\\?>)",
                     "beginCaptures": {
                         "1": {
-                            "name": "punctuation.definition.tag.end.cs.inner"
+                            "name": "punctuation.definition.tag.end.csr.inner"
                         }
                     },
                     "end": "(<\\?)(cs)(?=\\s/if)",
                     "endCaptures": {
                         "1": {
-                            "name": "punctuation.definition.tag.begin.cs.inner"
+                            "name": "punctuation.definition.tag.begin.csr.inner"
                         },
                         "2": {
-                            "name": "entity.name.tag.template.cs.inner"
+                            "name": "entity.name.tag.template.csr.inner"
                         }
                     },
                     "patterns": [
@@ -245,10 +242,10 @@
                             "begin": "(<\\?)(cs)\\s+(elif)(:)",
                             "beginCaptures": {
                                 "1": {
-                                    "name": "punctuation.definition.tag.begin.cs.elif"
+                                    "name": "punctuation.definition.tag.begin.csr.elif"
                                 },
                                 "2": {
-                                    "name": "entity.name.tag.template.cs.elif"
+                                    "name": "entity.name.tag.template.csr.elif"
                                 },
                                 "3": {
                                     "name": "keyword.control.elif"
@@ -263,7 +260,7 @@
                             "end": "(?:\\s*|^)(\\?>)",
                             "endCaptures": {
                                 "1": {
-                                    "name": "punctuation.definition.tag.end.cs.elif"
+                                    "name": "punctuation.definition.tag.end.csr.elif"
                                 }
                             },
                             "patterns": [
@@ -283,10 +280,10 @@
                             "begin": "(<\\?)(cs)\\s+(else)",
                             "beginCaptures": {
                                 "1": {
-                                    "name": "punctuation.definition.tag.begin.cs.else"
+                                    "name": "punctuation.definition.tag.begin.csr.else"
                                 },
                                 "2": {
-                                    "name": "entity.name.tag.template.cs.else"
+                                    "name": "entity.name.tag.template.csr.else"
                                 },
                                 "3": {
                                     "name": "keyword.control.else"
@@ -295,7 +292,7 @@
                             "end": "(\\?>)",
                             "endCaptures": {
                                 "1": {
-                                    "name": "punctuation.definition.tag.end.cs.else"
+                                    "name": "punctuation.definition.tag.end.csr.else"
                                 }
                             }
                         },
@@ -315,23 +312,11 @@
                 },
                 "2": {
                     "name": "punctuation.separator.key-value.csr"
-                },
-                "3": {
-                    "name": "string.value"
-                },
-                "4": {
-                    "name": "punctuation.definition.tag.end.cs.inner"
                 }
             },
-            "end": "(<\\?)(cs)\\s+(/alt)",
+            "end": "(?<=<\\?cs)\\s+(/alt)",
             "endCaptures": {
                 "1": {
-                    "name": "punctuation.definition.tag.begin.cs.inner"
-                },
-                "2": {
-                    "name": "entity.name.tag.template.cs.inner"
-                },
-                "3": {
                     "name": "keyword.control.alt.end"
                 }
             },
@@ -346,12 +331,26 @@
                     ]
                 },
                 {
-                    "match": "(\\?>)",
+                    "begin": "(\\?>)",
                     "captures": {
                         "1": {
-                            "name": "punctuation.definition.tag.end.cs.inner"
+                            "name": "punctuation.definition.tag.end.csr.inner"
                         }
-                    }
+                    },
+                    "end": "(<\\?)(cs)(?=\\s/alt)",
+                    "endCaptures": {
+                        "1": {
+                            "name": "punctuation.definition.tag.begin.cs.inner"
+                        },
+                        "2": {
+                            "name": "entity.name.tag.template.cs.inner"
+                        }
+                    },
+                    "patterns": [
+                        {
+                            "include": "source.csr"
+                        }
+                    ]
                 }
             ]
         },
@@ -377,16 +376,16 @@
                     "begin": "(\\?>)",
                     "beginCaptures": {
                         "1": {
-                            "name": "punctuation.definition.tag.end.cs.inner"
+                            "name": "punctuation.definition.tag.end.csr.inner"
                         }
                     },
                     "end": "(<\\?)(cs)(?=\\s/with)",
                     "endCaptures": {
                         "1": {
-                            "name": "punctuation.definition.tag.begin.cs.inner"
+                            "name": "punctuation.definition.tag.begin.csr.inner"
                         },
                         "2": {
-                            "name": "entity.name.tag.template.cs.inner"
+                            "name": "entity.name.tag.template.csr.inner"
                         }
                     },
                     "patterns": [
@@ -422,16 +421,16 @@
                     "begin": "(\\?>)",
                     "beginCaptures": {
                         "1": {
-                            "name": "punctuation.definition.tag.end.cs.inner"
+                            "name": "punctuation.definition.tag.end.csr.inner"
                         }
                     },
                     "end": "(<\\?)(cs)(?=\\s/loop)",
                     "endCaptures": {
                         "1": {
-                            "name": "punctuation.definition.tag.begin.cs.inner"
+                            "name": "punctuation.definition.tag.begin.csr.inner"
                         },
                         "2": {
-                            "name": "entity.name.tag.template.cs.inner"
+                            "name": "entity.name.tag.template.csr.inner"
                         }
                     },
                     "patterns": [
@@ -467,16 +466,16 @@
                     "begin": "(\\?>)",
                     "beginCaptures": {
                         "1": {
-                            "name": "punctuation.definition.tag.end.cs.inner"
+                            "name": "punctuation.definition.tag.end.csr.inner"
                         }
                     },
                     "end": "(<\\?)(cs)(?=\\s/each)",
                     "endCaptures": {
                         "1": {
-                            "name": "punctuation.definition.tag.begin.cs.inner"
+                            "name": "punctuation.definition.tag.begin.csr.inner"
                         },
                         "2": {
-                            "name": "entity.name.tag.template.cs.inner"
+                            "name": "entity.name.tag.template.csr.inner"
                         }
                     },
                     "patterns": [
@@ -544,16 +543,16 @@
                     "begin": "(\\?>)",
                     "beginCaptures": {
                         "1": {
-                            "name": "punctuation.definition.tag.end.cs.inner"
+                            "name": "punctuation.definition.tag.end.csr.inner"
                         }
                     },
                     "end": "(<\\?)(cs)(?=\\s/def)",
                     "endCaptures": {
                         "1": {
-                            "name": "punctuation.definition.tag.begin.cs.inner"
+                            "name": "punctuation.definition.tag.begin.csr.inner"
                         },
                         "2": {
-                            "name": "entity.name.tag.template.cs.inner"
+                            "name": "entity.name.tag.template.csr.inner"
                         }
                     },
                     "patterns": [
@@ -568,6 +567,9 @@
             "patterns": [
                 {
                     "include": "source.js#string"
+                },
+                {
+                    "include": "#comment"
                 },
                 {
                     "include": "source.js#identifiers"
@@ -652,6 +654,11 @@
                     "include": "source.js#array-literal"
                 }
             ]
+        },
+        "comment": {
+            "name": "comment.block.csr",
+            "begin": "<\\?cs\\s+#",
+            "end": "\\?>"
         }
     }
 }

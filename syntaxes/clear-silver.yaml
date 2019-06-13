@@ -3,38 +3,35 @@ scopeName: source.csr
 fileTypes: [csr]
 patterns:
   # 注释
-  - name: comment.block.cs
-    begin: <\?cs\s+#
-    end: (\?>)
-    captures:
-      '0': { name: punctuation.definition.comment.cs }
+  - patterns:
+      - include: '#comment'
   # 单行标记
-  - name: meta.tag.any.html.cs-single
+  - name: meta.tag.any.html.csr-single
     begin: (<\?)(cs)\s+(?!if|each|with|loop|alt|def)
     beginCaptures:
-      '1': { name: punctuation.definition.tag.begin.cs }
-      '2': { name: entity.name.tag.template.cs }
+      '1': { name: punctuation.definition.tag.begin.csr }
+      '2': { name: entity.name.tag.template.csr }
     # 空格或者换行开头
     end: (\?>)
     endCaptures:
-      '1': { name: punctuation.definition.tag.end.cs }
+      '1': { name: punctuation.definition.tag.end.csr }
     patterns:
-      - include: '#cs-commands-single'
+      - include: '#csr-commands-single'
   # 多行语法标记
-  - name: meta.tag.any.html.cs-multi
+  - name: meta.tag.any.html.csr-multi
     begin: (<\?)(cs)\s+(?=if|each|with|loop|alt|def)
     beginCaptures:
-      '1': { name: punctuation.definition.tag.begin.cs.mult }
-      '2': { name: entity.name.tag.template.cs.mult }
+      '1': { name: punctuation.definition.tag.begin.csr.mult }
+      '2': { name: entity.name.tag.template.csr.mult }
     end: (\?>)
     endCaptures:
-      '1': { name: punctuation.definition.tag.end.cs.mult }
+      '1': { name: punctuation.definition.tag.end.csr.mult }
     patterns:
-      - include: '#cs-commands-mult'
+      - include: '#csr-commands-mult'
   # - include: 'text.html.basic'
 # -------------------------------- responsitory ------------------------------------
 repository:
-  cs-commands-single:
+  csr-commands-single:
     name: keyword.commands.single
     patterns:
       - include: '#command-var'
@@ -42,7 +39,7 @@ repository:
       - include: '#command-name'
       - include: '#command-include'
       - include: '#command-call'
-  cs-commands-mult:
+  csr-commands-mult:
     name: keyword.commands.mult
     patterns:
       - include: '#command-if'
@@ -118,24 +115,24 @@ repository:
           - include: '#expression'
       - begin: (\?>)
         beginCaptures: 
-          '1': { name: punctuation.definition.tag.end.cs.inner }
+          '1': { name: punctuation.definition.tag.end.csr.inner }
         end: (<\?)(cs)(?=\s/if)
         endCaptures:
-          '1': { name: punctuation.definition.tag.begin.cs.inner }
-          '2': { name: entity.name.tag.template.cs.inner }
+          '1': { name: punctuation.definition.tag.begin.csr.inner }
+          '2': { name: entity.name.tag.template.csr.inner }
         # else if
         patterns:
           - name: meta.tag.elseif
             begin: '(<\?)(cs)\s+(elif)(:)'
             beginCaptures:
-              '1': { name: punctuation.definition.tag.begin.cs.elif }
-              '2': { name: entity.name.tag.template.cs.elif }
+              '1': { name: punctuation.definition.tag.begin.csr.elif }
+              '2': { name: entity.name.tag.template.csr.elif }
               '3': { name: keyword.control.elif }
               '4': { name: punctuation.separator.key-value.csr }
               '5': { name: string.value }
             end: (?:\s*|^)(\?>)
             endCaptures:
-              '1': { name: punctuation.definition.tag.end.cs.elif }
+              '1': { name: punctuation.definition.tag.end.csr.elif }
             patterns:
               - begin: (?<=elif:)
                 end: (?=\?>)
@@ -145,12 +142,12 @@ repository:
           - name: meta.tag.else
             begin: '(<\?)(cs)\s+(else)'
             beginCaptures:
-              '1': { name: punctuation.definition.tag.begin.cs.else }
-              '2': { name: entity.name.tag.template.cs.else }
+              '1': { name: punctuation.definition.tag.begin.csr.else }
+              '2': { name: entity.name.tag.template.csr.else }
               '3': { name: keyword.control.else }
             end: (\?>)
             endCaptures:
-              '1': { name: punctuation.definition.tag.end.cs.else }
+              '1': { name: punctuation.definition.tag.end.csr.else }
           - include: 'source.csr'
   # alt
   command-alt:
@@ -159,21 +156,23 @@ repository:
     beginCaptures:
       '1': { name: keyword.control.alt.start } 
       '2': { name: punctuation.separator.key-value.csr }
-      '3': { name: string.value }
-      '4': { name: punctuation.definition.tag.end.cs.inner }
-    end: (<\?)(cs)\s+(/alt)
+    end: (?<=<\?cs)\s+(/alt)
     endCaptures:
-      '1': { name: punctuation.definition.tag.begin.cs.inner }
-      '2': { name: entity.name.tag.template.cs.inner }
-      '3': { name: keyword.control.alt.end }
+      '1': { name: keyword.control.alt.end }
     patterns:
       - begin: (?<=alt:)
         end: (?=\?>)
         patterns:
           - include: '#expression'
-      - match: (\?>)
+      - begin: (\?>)
         captures: 
-          '1': { name: punctuation.definition.tag.end.cs.inner }
+          '1': { name: punctuation.definition.tag.end.csr.inner }
+        end: (<\?)(cs)(?=\s/alt)
+        endCaptures:
+          '1': { name: punctuation.definition.tag.begin.cs.inner }
+          '2': { name: entity.name.tag.template.cs.inner }
+        patterns:
+          - include: 'source.csr'
   # with
   command-with:
     name: meta.tag.with
@@ -187,11 +186,11 @@ repository:
     patterns:
       - begin: (\?>)
         beginCaptures: 
-          '1': { name: punctuation.definition.tag.end.cs.inner }
+          '1': { name: punctuation.definition.tag.end.csr.inner }
         end: (<\?)(cs)(?=\s/with)
         endCaptures:
-          '1': { name: punctuation.definition.tag.begin.cs.inner }
-          '2': { name: entity.name.tag.template.cs.inner }
+          '1': { name: punctuation.definition.tag.begin.csr.inner }
+          '2': { name: entity.name.tag.template.csr.inner }
         patterns:
           - include: 'source.csr'
       - include: '#expression'
@@ -208,11 +207,11 @@ repository:
     patterns:
       - begin: (\?>)
         beginCaptures: 
-          '1': { name: punctuation.definition.tag.end.cs.inner }
+          '1': { name: punctuation.definition.tag.end.csr.inner }
         end: (<\?)(cs)(?=\s/loop)
         endCaptures:
-          '1': { name: punctuation.definition.tag.begin.cs.inner }
-          '2': { name: entity.name.tag.template.cs.inner }
+          '1': { name: punctuation.definition.tag.begin.csr.inner }
+          '2': { name: entity.name.tag.template.csr.inner }
         patterns:
           - include: 'source.csr'
       - include: '#expression'
@@ -229,11 +228,11 @@ repository:
     patterns:
       - begin: (\?>)
         beginCaptures: 
-          '1': { name: punctuation.definition.tag.end.cs.inner }
+          '1': { name: punctuation.definition.tag.end.csr.inner }
         end: (<\?)(cs)(?=\s/each)
         endCaptures:
-          '1': { name: punctuation.definition.tag.begin.cs.inner }
-          '2': { name: entity.name.tag.template.cs.inner }
+          '1': { name: punctuation.definition.tag.begin.csr.inner }
+          '2': { name: entity.name.tag.template.csr.inner }
         patterns:
           - include: 'source.csr'
       - include: '#expression'
@@ -264,11 +263,11 @@ repository:
               '2': { name: punctuation.separator.comma.csr }
       - begin: (\?>)
         beginCaptures: 
-          '1': { name: punctuation.definition.tag.end.cs.inner }
+          '1': { name: punctuation.definition.tag.end.csr.inner }
         end: (<\?)(cs)(?=\s/def)
         endCaptures:
-          '1': { name: punctuation.definition.tag.begin.cs.inner }
-          '2': { name: entity.name.tag.template.cs.inner }
+          '1': { name: punctuation.definition.tag.begin.csr.inner }
+          '2': { name: entity.name.tag.template.csr.inner }
         patterns:
           - include: 'source.csr'
   # -------------------------------- expression ------------------------------------
@@ -276,6 +275,7 @@ repository:
   expression:
     patterns:
       - include: 'source.js#string'
+      - include: '#comment'
       - include: 'source.js#identifiers'
       - include: '#expression-operators'
       - include: '#literal'
@@ -316,3 +316,8 @@ repository:
       - name: 'constant.numeric.decimal.csr'
         match: ([0-9])
       - include: 'source.js#array-literal'
+  # 注释
+  comment:
+    name: comment.block.csr
+    begin: <\?cs\s+#
+    end: \?>
