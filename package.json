@@ -71,7 +71,13 @@
 				"command": "extension.enable",
 				"group": "z_commands"
 			}]
-		}
+        },
+        "keybindings": [{
+            "command": "extension.enable",
+            "key": "ctrl+k t",
+            "mac": "cmd+k t",
+            "when": "editorTextFocus"
+        }]
     },
     "devDependencies": {
         "eslint": "^4.11.0",
