@@ -8,28 +8,51 @@
         ],
         "description": "clearsilver: <?cs语法标记"
     },
+    "clearsilver comment": {
+        "prefix": [
+            "comment",
+            "cs-comment",
+            "<?cs-comment"
+        ],
+        "body": [
+            "<?cs # $1 ?>"
+        ],
+        "description": [
+            "clearsilver: var",
+            "输出变量值"
+        ]
+    },
     "clearsilver var": {
         "prefix": [
+            "var",
             "cs-var",
             "<?cs-var"
         ],
         "body": [
             "<?cs var:$1 ?>"
         ],
-        "description": "clearsilver: var\n输出变量值"
+        "description": [
+            "clearsilver: var",
+            "输出变量值"
+        ]
     },
     "clearsilver set": {
         "prefix": [
+            "set",
             "cs-set",
             "<?cs-set"
         ],
         "body": [
             "<?cs set:$1=$2 ?>"
         ],
-        "description": "clearsilver: set\n赋值语句"
+        "description": [
+            "clearsilver: set",
+            "赋值语句"
+        ]
     },
     "clearsilver include": {
         "prefix": [
+            "include",
             "cs-include",
             "<?cs-include"
         ],
@@ -45,6 +68,7 @@
     },
     "clearsilver name": {
         "prefix": [
+            "name",
             "cs-name",
             "<?cs-name"
         ],
@@ -55,6 +79,7 @@
     },
     "clearsilver if": {
         "prefix": [
+            "if",
             "cs-if",
             "<?cs-if"
         ],
@@ -65,6 +90,7 @@
     },
     "clearsilver elif": {
         "prefix": [
+            "elif",
             "cs-elif",
             "<?cs-elif"
         ],
@@ -76,6 +102,7 @@
     },
     "clearsilver if-else": {
         "prefix": [
+            "if-else",
             "cs-if-else",
             "<?cs-if-else"
         ],
@@ -86,18 +113,55 @@
     },
     "clearsilver each": {
         "prefix": [
+            "each",
             "cs-each",
             "<?cs-each"
         ],
         "body": [
-            "<?cs each:${2:item} = ${1:array} ?>",
+            "<?cs each:${2:item} = ${1:expression} ?>",
             "\t$0",
             "<?cs /each ?>"
         ],
-        "description": "clearsilver: each\n迭代语句"
+        "description": [
+            "clearsilver: each",
+            "迭代语句"
+        ]
+    },
+    "clearsilver with": {
+        "prefix": [
+            "with",
+            "cs-with",
+            "<?cs-with"
+        ],
+        "body": [
+            "<?cs with:${2:item} = ${1:expression} ?>",
+            "\t$0",
+            "<?cs /with ?>"
+        ],
+        "description": [
+            "clearsilver: with",
+            "迭代语句"
+        ]
+    },
+    "clearsilver alt": {
+        "prefix": [
+            "alt",
+            "cs-alt",
+            "<?cs-alt"
+        ],
+        "body": [
+            "<?cs alt:${1:item} ?>",
+            "\t$0",
+            "<?cs /alt ?>"
+        ],
+        "description": [
+            "clearsilver: alt",
+            "简写版本的 if var else"
+        ]
     },
     "clearsilver loop": {
         "prefix": [
+            "loop",
             "cs-loop",
             "<?cs-loop"
         ],
@@ -116,6 +180,7 @@
     },
     "clearsilver def": {
         "prefix": [
+            "def",
             "cs-def",
             "<?cs-def"
         ],
