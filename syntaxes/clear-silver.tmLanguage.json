@@ -8,7 +8,7 @@
         {
             "name": "comment.block.cs",
             "begin": "<\\?cs\\s+#",
-            "end": "\\s*(\\?>)",
+            "end": "(\\?>)",
             "captures": {
                 "0": {
                     "name": "punctuation.definition.comment.cs"
@@ -26,7 +26,7 @@
                     "name": "entity.name.tag.template.cs"
                 }
             },
-            "end": "\\s*(\\?>)",
+            "end": "(\\?>)",
             "endCaptures": {
                 "1": {
                     "name": "punctuation.definition.tag.end.cs"
@@ -49,7 +49,7 @@
                     "name": "entity.name.tag.template.cs.mult"
                 }
             },
-            "end": "(?:\\s|^)(\\?>)",
+            "end": "(\\?>)",
             "endCaptures": {
                 "1": {
                     "name": "punctuation.definition.tag.end.cs.mult"
@@ -292,7 +292,7 @@
                                     "name": "keyword.control.else"
                                 }
                             },
-                            "end": "(?:\\s|^)(\\?>)",
+                            "end": "(\\?>)",
                             "endCaptures": {
                                 "1": {
                                     "name": "punctuation.definition.tag.end.cs.else"

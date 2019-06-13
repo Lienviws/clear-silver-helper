@@ -12,11 +12,20 @@ exports.activate = function(context) {
         let textDocument = uri.document
         
         if (!languageIdObj[textDocument.fileName]) {
-            vscode.languages.setTextDocumentLanguage(textDocument, csLanguageId)
-            languageIdObj[textDocument.fileName] = textDocument.languageId
-        } else if (textDocument.languageId === csLanguageId) {
-            vscode.languages.setTextDocumentLanguage(textDocument, languageIdObj[textDocument.fileName])
-            languageIdObj[textDocument.fileName] = ''
+            if (textDocument.languageId !== csLanguageId) {
+                vscode.languages.setTextDocumentLanguage(textDocument, csLanguageId)
+                languageIdObj[textDocument.fileName] = textDocument.languageId
+            } else {
+                return
+            }
+        } else {
+            if (textDocument.languageId === csLanguageId) {
+                vscode.languages.setTextDocumentLanguage(textDocument, languageIdObj[textDocument.fileName])
+                languageIdObj[textDocument.fileName] = ''
+            } else {
+                vscode.languages.setTextDocumentLanguage(textDocument, csLanguageId)
+                languageIdObj[textDocument.fileName] = textDocument.languageId
+            }
         }
     }));
 };

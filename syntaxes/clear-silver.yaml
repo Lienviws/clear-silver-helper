@@ -5,7 +5,7 @@ patterns:
   # 注释
   - name: comment.block.cs
     begin: <\?cs\s+#
-    end: \s*(\?>)
+    end: (\?>)
     captures:
       '0': { name: punctuation.definition.comment.cs }
   # 单行标记
@@ -15,7 +15,7 @@ patterns:
       '1': { name: punctuation.definition.tag.begin.cs }
       '2': { name: entity.name.tag.template.cs }
     # 空格或者换行开头
-    end: \s*(\?>)
+    end: (\?>)
     endCaptures:
       '1': { name: punctuation.definition.tag.end.cs }
     patterns:
@@ -26,7 +26,7 @@ patterns:
     beginCaptures:
       '1': { name: punctuation.definition.tag.begin.cs.mult }
       '2': { name: entity.name.tag.template.cs.mult }
-    end: (?:\s|^)(\?>)
+    end: (\?>)
     endCaptures:
       '1': { name: punctuation.definition.tag.end.cs.mult }
     patterns:
@@ -148,7 +148,7 @@ repository:
               '1': { name: punctuation.definition.tag.begin.cs.else }
               '2': { name: entity.name.tag.template.cs.else }
               '3': { name: keyword.control.else }
-            end: (?:\s|^)(\?>)
+            end: (\?>)
             endCaptures:
               '1': { name: punctuation.definition.tag.end.cs.else }
           - include: 'source.csr'
