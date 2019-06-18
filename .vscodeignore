@@ -7,3 +7,6 @@ vsc-extension-quickstart.md
 **/*.map
 **/.eslintrc.json
 asset/**
+gulpfile.js
+snippets/*.yaml
+syntaxes/*.yaml
