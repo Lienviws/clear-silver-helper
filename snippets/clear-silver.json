@@ -100,6 +100,17 @@
         ],
         "description": "clearsilver: if"
     },
+    "clearsilver else": {
+        "prefix": [
+            "else",
+            "cs-else",
+            "<?cs-else"
+        ],
+        "body": [
+            "<?cs else ?>$1"
+        ],
+        "description": "clearsilver: else"
+    },
     "clearsilver if-else": {
         "prefix": [
             "if-else",
