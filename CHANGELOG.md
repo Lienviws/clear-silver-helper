@@ -1,7 +1,10 @@
 # Change Log
-All notable changes to the "clear-silver-helper" extension will be documented in this file.
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+### 0.0.1 | 2019-06-18 [VSIX](https://github.com/Lienviws/clear-silver-helper/releases/download/0.0.1/clear-silver-helper-0.0.1.vsix)
 
-## [Unreleased]
-- Initial release
+Initial release, including:
+
+- Syntax highlighting
+- Snippet
+- menus call
+- Shortcut
