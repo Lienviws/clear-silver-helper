@@ -1,4 +1,6 @@
-name: clearSilver extension
+# [PackageDev] target_format: plist, ext: tmLanguage
+---
+name: ClearSilver
 scopeName: source.csr
 fileTypes: [csr]
 patterns:
@@ -321,3 +323,4 @@ repository:
     name: comment.block.csr
     begin: <\?cs\s+#
     end: \?>
+...
